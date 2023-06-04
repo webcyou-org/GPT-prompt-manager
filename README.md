@@ -6,13 +6,13 @@ This is a tool created with flutter that manages chatGPT prompts and can be used
 
 ## Usage
 
-## Pages
+### Pages
 
-### Prompt Manage Page
+#### Prompt Manage Page
 
 <img width="800" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/fca4072d-9a85-4bf5-91ca-9efd89298b5d">
 
-### OpenAI Setting Oage
+#### OpenAI Setting Page
 
 <img width="600" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/c0ff4956-49e7-41ff-a563-edf1111f019b">
 
