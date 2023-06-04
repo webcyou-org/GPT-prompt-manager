@@ -4,16 +4,31 @@ This is a tool created with flutter that manages chatGPT prompts and can be used
 
 <img width="600" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/686c5de9-bfba-4f2c-bc4f-a0f17d9ba5cc">
 
+## Usage
 
-## Getting Started
+## Pages
 
-This project is a starting point for a Flutter application.
+### Prompt Manage Page
 
-A few resources to get you started if this is your first Flutter project:
+<img width="800" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/fca4072d-9a85-4bf5-91ca-9efd89298b5d">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### OpenAI Setting Oage
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="600" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/c0ff4956-49e7-41ff-a563-edf1111f019b">
+
+## Development
+
+```
+flutter run
+```
+
+## Author
+
+**Daisuke Takayama**
+
+-   [@webcyou](https://twitter.com/webcyou)
+-   [@panicdragon](https://twitter.com/panicdragon)
+-   <https://github.com/webcyou>
+-   <https://github.com/webcyou-org>
+-   <https://github.com/panicdragon>
+-   <https://www.webcyou.com/>
