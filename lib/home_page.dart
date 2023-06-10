@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  OverlayEntry? entry;
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +36,57 @@ class HomePageState extends State<HomePage> {
                     ),
                   ],
                   backgroundColor: const Color(0xff202123),
+                  // useIndicator: true,
+                  // indicatorColor: const Color(0xffffffff),
                   selectedIndex: _selectedIndex,
                   onDestinationSelected: (index) {
+                    showOverlay();
                     setState(() {
                       _selectedIndex = index;
                     });
                   },
                 ),
-                Container(
-                  child: Text('$_selectedIndex'),
-                )
+                Expanded(
+                    child: Scrollbar(
+                        child: SingleChildScrollView(
+                            child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: InputDecoration(hintText: "Input"),
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      primary: false,
+                      itemCount: 30,
+                      itemBuilder: (context, index) => ListTile(
+                        title: Text("item ${index + 1}"),
+                      ),
+                    ),
+                  ],
+                )))),
               ],
             ),
           ],
-        )
+        ));
+  }
+
+  void showOverlay() {
+    entry = OverlayEntry(
+      builder: (BuildContext context) => Positioned(
+        left: 100,
+        bottom: 20,
+        child: ElevatedButton.icon(
+          icon: Icon(Icons.stop_circle_rounded),
+          label: Text('Record'),
+          onPressed: () {},
+        ),
+      ),
     );
+
+    final overlay = Overlay.of(context);
+    overlay.insert(entry!);
   }
 }
