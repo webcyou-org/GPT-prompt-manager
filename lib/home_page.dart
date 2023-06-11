@@ -35,32 +35,33 @@ class HomePageState extends State<HomePage> {
                         ))),
                 Positioned(
                   left: 80,
-                  bottom: 40,
-                  height: 70,
+                  bottom: 30,
+                  height: 45,
                   child: Container(
-                      padding: const EdgeInsets.all(12.0),
+                      // padding: const EdgeInsets.all(12.0),
                       // height: 70,
-                      // color: Colors.cyan,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            // color: Color(0xffD6D6D6),
+                            color: Colors.black26,
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
                       child: SizedBox(
                           width: size.width * 0.8 - 40,
-                          // height: 150,
-                          // width: double.infinity,
-                          // child: TextField(
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'Send message.',
-                          //   ),
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
                           child: TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               // contentPadding: EdgeInsets.all(30),
-                              suffixIcon: Icon(Icons.send),
-                              border: OutlineInputBorder(),
+                              suffixIcon: const Icon(Icons.send),
+                              border: inputBorder(),
                               labelText: 'Send message.',
+                              fillColor: Colors.white,
+                              filled: true,
                             ),
                             style: const TextStyle(
                               fontSize: 16,
@@ -75,5 +76,14 @@ class HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  OutlineInputBorder inputBorder() {
+    return const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderSide: BorderSide(
+          color: Color(0xffD6D6D6),
+          width: 1,
+        ));
   }
 }
