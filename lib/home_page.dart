@@ -21,19 +21,29 @@ class HomePageState extends State<HomePage> {
         children: [
           const SideMenu(),
           Expanded(
-              child: Scrollbar(
-                  child: SingleChildScrollView(
-                      child: Column(
-            children: [
-              const MessageList(),
-              // Container(
-              //   margin: EdgeInsets.all(8.0),
-              //   child: TextField(
-              //     decoration: InputDecoration(hintText: "Input"),
-              //   ),
-              // ),
-            ],
-          )))),
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                    child: Column(
+                  children: const [
+                    MessageList(),
+                  ],
+                )),
+                Positioned(
+                  left: 40,
+                  bottom: 20,
+                  height: 40,
+                  child: Container(
+                      margin: EdgeInsets.all(12.0),
+                      height: 20,
+                      // child: TextField(
+                      //   decoration: InputDecoration(hintText: "Input"),
+                      // ),
+                      child: const Text('TextField')),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
