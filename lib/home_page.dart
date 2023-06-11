@@ -15,6 +15,8 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: Header(),
       body: Row(
@@ -24,22 +26,48 @@ class HomePageState extends State<HomePage> {
             child: Stack(
               children: [
                 SingleChildScrollView(
-                    child: Column(
-                  children: const [
-                    MessageList(),
-                  ],
-                )),
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 100),
+                        child: Column(
+                          children: const [
+                            MessageList(),
+                          ],
+                        ))),
                 Positioned(
-                  left: 40,
-                  bottom: 20,
-                  height: 40,
+                  left: 80,
+                  bottom: 40,
+                  height: 70,
                   child: Container(
-                      margin: EdgeInsets.all(12.0),
-                      height: 20,
-                      // child: TextField(
-                      //   decoration: InputDecoration(hintText: "Input"),
-                      // ),
-                      child: const Text('TextField')),
+                      padding: const EdgeInsets.all(12.0),
+                      height: 70,
+                      // color: Colors.cyan,
+                      child: SizedBox(
+                          width: size.width * 0.8 - 40,
+                          // height: 150,
+                          // width: double.infinity,
+                          // child: TextField(
+                          //   decoration: InputDecoration(
+                          //     border: OutlineInputBorder(),
+                          //     labelText: 'Send message.',
+                          //   ),
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: Colors.white,
+                          //   ),
+                          // ),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              // contentPadding: EdgeInsets.all(30),
+                              suffixIcon: Icon(Icons.send),
+                              border: OutlineInputBorder(),
+                              labelText: 'Send message.',
+                            ),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              height: 1.5,
+                              color: Colors.black,
+                            ),
+                          ))),
                 )
               ],
             ),

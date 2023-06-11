@@ -9,22 +9,20 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Padding(
-          padding: EdgeInsets.only(left: 50.0),
+          padding: const EdgeInsets.only(left: 50.0),
           child: Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.add_circle_outline),
-          onPressed: () {
-          },
-        ),
-        Select(onChanged: onChanged),
-        IconButton(
-          icon: const Icon(Icons.edit_note),
-          onPressed: () {
-          },
-        ),
-      ],
-      )),
+            children: [
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline),
+                onPressed: () {},
+              ),
+              Select(onChanged: onChanged),
+              IconButton(
+                icon: const Icon(Icons.edit_note),
+                onPressed: () {},
+              ),
+            ],
+          )),
       centerTitle: false,
       backgroundColor: const Color(0xff202123),
       elevation: 0.0,
