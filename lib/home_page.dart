@@ -39,7 +39,7 @@ class HomePageState extends State<HomePage> {
                   height: 70,
                   child: Container(
                       padding: const EdgeInsets.all(12.0),
-                      height: 70,
+                      // height: 70,
                       // color: Colors.cyan,
                       child: SizedBox(
                           width: size.width * 0.8 - 40,
