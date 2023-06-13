@@ -34,7 +34,6 @@ class SideMenuState extends State<SideMenu> {
       // indicatorColor: const Color(0xffffffff),
       selectedIndex: _selectedIndex,
       onDestinationSelected: (index) {
-        print(index);
         setState(() {
           _selectedIndex = index;
         });
