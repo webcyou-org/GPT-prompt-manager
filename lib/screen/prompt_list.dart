@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../component/prompt_list.dart';
 
-class Prompt extends StatefulWidget {
-  const Prompt({Key? key}) : super(key: key);
+class PromptListScreen extends StatefulWidget {
+  const PromptListScreen({Key? key}) : super(key: key);
 
   @override
-  PromptState createState() => PromptState();
+  PromptListScreenState createState() => PromptListScreenState();
 }
 
-class PromptState extends State<Prompt> {
+class PromptListScreenState extends State<PromptListScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(

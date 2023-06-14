@@ -30,14 +30,11 @@ class HomeState extends State<Home> {
           Positioned(
             left: 80,
             bottom: 30,
-            // height: 45,
             child: Container(
-                // height: null,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
-                      // color: Color(0xffD6D6D6),
                       color: Colors.black26,
                       spreadRadius: 1,
                       blurRadius: 8,

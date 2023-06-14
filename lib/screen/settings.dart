@@ -9,8 +9,6 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
-  OverlayEntry? entry;
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
