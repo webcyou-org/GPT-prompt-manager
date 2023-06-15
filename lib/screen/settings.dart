@@ -18,7 +18,7 @@ class SettingsState extends State<Settings> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
-                child: titleText('Prompt Name')),
+                child: titleText('Model')),
             Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -30,17 +30,14 @@ class SettingsState extends State<Settings> {
                 ))),
             Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
-                child: titleText('Value')),
+                child: titleText('OpenAI API Key')),
             Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: SizedBox(
                     child: TextFormField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 20,
-                  minLines: 10,
-                  decoration: inputDecoration('Value'),
+                  decoration: inputDecoration('OpenAI API Key'),
                   style: inputTextStyle(),
                 ))),
             Padding(
