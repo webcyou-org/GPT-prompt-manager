@@ -24,38 +24,36 @@ class SelectState extends State<Select> {
               borderRadius: BorderRadius.circular(4.0),
               color: Colors.white,
             ),
-            child: DropdownButton(
-              isExpanded: true,
-              style: const TextStyle(
-                color: Color(0xff424242),
-              ),
-              value: selectedValue,
-              underline: Container(),
-              items: spriteNameList
-                  .map((String list) => DropdownMenuItem(
-                      value: list,
-                      child: Text(
-                        list,
-                        // style: const TextStyle(color: Colors.black),
-                      )))
-                  .toList(),
-              onChanged: (String? value) {
-                widget.onChanged!(value!);
-                setState(() {
-                  selectedValue = value!;
-                });
-              },
-              selectedItemBuilder: (BuildContext context) {
-                return spriteNameList.map((String value) {
-                  return Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      selectedValue,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  );
-                }).toList();
-              },
-            )));
+            child: Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: DropdownButton(
+                  isExpanded: true,
+                  value: selectedValue,
+                  underline: Container(),
+                  items: spriteNameList
+                      .map((String list) => DropdownMenuItem(
+                          value: list,
+                          child: Text(
+                            list,
+                          )))
+                      .toList(),
+                  onChanged: (String? value) {
+                    widget.onChanged!(value!);
+                    setState(() {
+                      selectedValue = value!;
+                    });
+                  },
+                  selectedItemBuilder: (BuildContext context) {
+                    return spriteNameList.map((String value) {
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          selectedValue,
+                          style: const TextStyle(color: Color(0xff424242)),
+                        ),
+                      );
+                    }).toList();
+                  },
+                ))));
   }
 }
