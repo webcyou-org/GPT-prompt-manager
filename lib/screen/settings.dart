@@ -37,7 +37,8 @@ class SettingsState extends State<Settings> {
                 ),
                 child: SizedBox(
                     child: TextFormField(
-                  decoration: inputDecoration('OpenAI API Key'),
+                  decoration: inputDecoration(
+                      'Enter the secret key for the open ai api here and save it locally'),
                   style: inputTextStyle(),
                 ))),
             Padding(
