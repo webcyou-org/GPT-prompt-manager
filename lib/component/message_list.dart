@@ -41,7 +41,7 @@ class MessageListState extends State<MessageList> {
                   child: Text(
                 message,
                 style:
-                    const TextStyle(color: Color(0xff374151), fontSize: 18.0),
+                    const TextStyle(color: Color(0xff374151), fontSize: 14.0),
               )),
             ],
           )),

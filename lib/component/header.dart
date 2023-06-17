@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:prompt_manager/component/prompt_select.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
+  const Header({
+    Key? key,
+    required this.onClickPromptMenu,
+  }) : super(key: key);
+
+  final Function(int) onClickPromptMenu;
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -14,12 +21,16 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.add_circle_outline),
-                onPressed: () {},
+                onPressed: () {
+                  onClickPromptMenu(1);
+                },
               ),
               Select(onChanged: onChanged),
               IconButton(
                 icon: const Icon(Icons.edit_note),
-                onPressed: () {},
+                onPressed: () {
+                  onClickPromptMenu(1);
+                },
               ),
             ],
           )),
