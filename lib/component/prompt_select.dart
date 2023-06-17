@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const spriteNameList = ['aaaaa', 'bbbb'];
+const spriteNameList = ['Article Correction', 'Text Translation'];
 
 class Select extends StatefulWidget {
   final ValueChanged<String>? onChanged;
