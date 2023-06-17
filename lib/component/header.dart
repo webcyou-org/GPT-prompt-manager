@@ -9,7 +9,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Padding(
-          padding: const EdgeInsets.only(left: 50.0),
+          padding: const EdgeInsets.only(left: 110.0),
           child: Row(
             children: [
               IconButton(

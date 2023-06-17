@@ -28,6 +28,7 @@ class SettingsState extends State<Settings> {
                 height: 36,
                 child: Container(
                     decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xff424242)),
                       borderRadius: BorderRadius.circular(4.0),
                       color: Colors.white,
                     ),
