@@ -24,30 +24,24 @@ class MessageListState extends State<MessageList> {
   }
 
   Widget _messageItem(String message, Image icon) {
-    return GestureDetector(
-      child: Container(
-          padding:
-              const EdgeInsets.only(top: 16, bottom: 16, left: 60, right: 40),
-          decoration: const BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(width: 1.0, color: Color(0xffD6D6D6)))),
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(right: 36.0),
-                child: icon,
-              ),
-              Flexible(
-                  child: Text(
-                message,
-                style:
-                    const TextStyle(color: Color(0xff374151), fontSize: 14.0),
-              )),
-            ],
-          )),
-      onTap: () {
-        print("onTap called.");
-      },
-    );
+    return Container(
+        padding:
+            const EdgeInsets.only(top: 16, bottom: 16, left: 60, right: 40),
+        decoration: const BoxDecoration(
+            border: Border(
+                bottom: BorderSide(width: 1.0, color: Color(0xffD6D6D6)))),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(right: 36.0),
+              child: icon,
+            ),
+            Flexible(
+                child: Text(
+              message,
+              style: const TextStyle(color: Color(0xff374151), fontSize: 14.0),
+            )),
+          ],
+        ));
   }
 }
