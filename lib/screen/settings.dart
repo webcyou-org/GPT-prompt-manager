@@ -16,6 +16,7 @@ class SettingsState extends State<Settings> {
   var selectedValue = promptModelList.first;
 
   final _apiEditController = TextEditingController();
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +80,14 @@ class SettingsState extends State<Settings> {
                 child: SizedBox(
                     child: TextFormField(
                   controller: _apiEditController,
-                  decoration: inputDecoration(
-                      'Enter the secret key for the open ai api here and save it locally'),
+                  obscureText: _isObscure,
+                  decoration: secretInputDecoration(
+                      'Enter the secret key for the open ai api here and save it locally',
+                      _isObscure, (() {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  })),
                   style: inputTextStyle(),
                 ))),
             Padding(

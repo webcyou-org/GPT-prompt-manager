@@ -7,7 +7,6 @@ import 'const.dart';
 void callOpenAPI(String message, String token) async {
   var url = Uri.parse(chatGPTEndpoint);
 
-  print(message);
   var response = await http.post(url,
       body: jsonEncode(
           {"model": chatGPTModel, "prompt": message, "max_tokens": 200}),

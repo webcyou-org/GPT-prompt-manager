@@ -24,6 +24,20 @@ InputDecoration inputDecoration(label) {
   );
 }
 
+InputDecoration secretInputDecoration(
+    String label, bool isObscure, Function callback) {
+  return InputDecoration(
+    border: inputBorder(),
+    labelText: label,
+    fillColor: Colors.white,
+    filled: true,
+    suffixIcon: IconButton(
+      icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility),
+      onPressed: () => callback(),
+    ),
+  );
+}
+
 TextStyle inputTextStyle() {
   return const TextStyle(
     fontSize: 16,
