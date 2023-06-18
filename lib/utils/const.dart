@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 const chatGPTEndpoint = 'https://api.openai.com/v1/completions';
 const chatGPTModel = "text-davinci-003";
 
+const promptsTableName = 'prompts';
+const userTableName = 'user_config';
+
 OutlineInputBorder inputBorder() {
   return const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../component/message_list.dart';
 import '../utils/const.dart';
+import '../utils/http_helper.dart';
+import '../db/database_helper.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -11,6 +13,9 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   OverlayEntry? entry;
+  final dbHelper = DatabaseHelper.instance;
+
+  final _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +50,17 @@ class HomeState extends State<Home> {
                 child: SizedBox(
                     width: size.width * 0.8 - 40,
                     child: TextFormField(
+                      controller: _messageController,
                       keyboardType: TextInputType.multiline,
                       maxLines: 6,
                       minLines: 1,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.send),
+                        suffixIcon: IconButton(
+                            icon: const Icon(Icons.send),
+                            onPressed: () async {
+                              var apiKey = await _getApiKey();
+                              callOpenAPI(_messageController.text, apiKey);
+                            }),
                         border: inputBorder(),
                         labelText: 'Send message.',
                         fillColor: Colors.white,
@@ -61,5 +72,10 @@ class HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  Future<String> _getApiKey() async {
+    final allRows = await dbHelper.queryAllRows(userTableName);
+    return allRows.first['apikey'];
   }
 }

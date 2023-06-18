@@ -4,6 +4,7 @@ import 'screen/home.dart';
 import 'screen/prompt.dart';
 import 'screen/prompt_edit.dart';
 import 'screen/settings.dart';
+import 'db/database_helper.dart';
 
 class PromptManager extends StatefulWidget {
   final ValueChanged<String>? onChanged;
@@ -15,6 +16,8 @@ class PromptManager extends StatefulWidget {
 }
 
 class PromptManagerState extends State<PromptManager> {
+  final dbHelper = DatabaseHelper.instance;
+
   int _selectedIndex = 0;
   int _selectedDetailIndex = 0;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/const.dart';
+import '../db/database_helper.dart';
 
 const promptModelList = ['text-davinci-003'];
 
@@ -11,10 +12,15 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
+  final dbHelper = DatabaseHelper.instance;
   var selectedValue = promptModelList.first;
+
+  final _apiEditController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    _dbinit();
+
     return Expanded(
       child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -72,6 +78,7 @@ class SettingsState extends State<Settings> {
                 ),
                 child: SizedBox(
                     child: TextFormField(
+                  controller: _apiEditController,
                   decoration: inputDecoration(
                       'Enter the secret key for the open ai api here and save it locally'),
                   style: inputTextStyle(),
@@ -86,10 +93,23 @@ class SettingsState extends State<Settings> {
                         backgroundColor: const Color(0xFF5E47D2),
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        Map<String, dynamic> row = {
+                          DatabaseHelper.columnId: 1,
+                          'apikey': _apiEditController.text
+                        };
+                        final rowsAffected =
+                            await dbHelper.update(userTableName, row);
+                        print('更新しました。 ID：$rowsAffected ');
+                      },
                       child: const Text('Save'),
                     ))),
           ])),
     );
+  }
+
+  void _dbinit() async {
+    final allRows = await dbHelper.queryAllRows(userTableName);
+    _apiEditController.text = allRows.first['apikey'];
   }
 }
