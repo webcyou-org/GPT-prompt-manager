@@ -58,6 +58,7 @@ class HomeState extends State<Home> {
                         suffixIcon: IconButton(
                             icon: const Icon(Icons.send),
                             onPressed: () async {
+                              if (_messageController.text.isEmpty) return;
                               var apiKey = await _getApiKey();
                               callOpenAPI(_messageController.text, apiKey);
                             }),

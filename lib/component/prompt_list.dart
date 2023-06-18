@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:prompt_manager/utils/const.dart';
+import '../db/database_helper.dart';
 
 class PromptList extends StatefulWidget {
   final ValueChanged<String>? onChanged;
@@ -10,18 +14,42 @@ class PromptList extends StatefulWidget {
 }
 
 class PromptListState extends State<PromptList> {
+  final dbHelper = DatabaseHelper.instance;
+  late Future<List<dynamic>> customPromptList;
+
+  @override
+  void initState() {
+    super.initState();
+    customPromptList = Future<List<dynamic>>(
+      () async {
+        return await dbHelper.queryAllRows(promptsTableName);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      primary: false,
-      itemCount: 10,
-      // itemBuilder: (context, index) => ListTile(
-      //   title: Text("custom prompt ${index + 1}"),
-      // ),
-      itemBuilder: (BuildContext context, int index) =>
-          _promptItem("custom prompt ${index + 1}"),
-    );
+    return FutureBuilder(
+        future: customPromptList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var promptList = snapshot.data!;
+
+            return ListView.builder(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: promptList.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  _promptItem(promptList[index]['title']),
+            );
+          }
+          return ListView.builder(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: 0,
+              itemBuilder: (BuildContext context, int index) =>
+                  _promptItem(''));
+        });
   }
 
   Widget _promptItem(String title) {

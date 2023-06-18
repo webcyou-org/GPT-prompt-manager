@@ -18,7 +18,9 @@ class MessageListState extends State<MessageList> {
       itemCount: 30,
       itemBuilder: (BuildContext context, int index) => _messageItem(
         "以下の文章から誤字・脱字、タイプミスを見つけました。\n ・「どもです。」 → 「こんにちは。」\n ・「久々な感じです。」 → 「久しぶりの感じです。」 ${index + 1}",
-        Image.asset('assets/images/icon_chatgpt.png'),
+        index % 2 == 0
+            ? Image.asset('assets/images/icon_chatgpt.png')
+            : Image.asset('assets/images/icon_user.png'),
       ),
     );
   }

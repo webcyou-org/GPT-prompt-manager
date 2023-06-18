@@ -14,6 +14,7 @@ class Settings extends StatefulWidget {
 class SettingsState extends State<Settings> {
   final dbHelper = DatabaseHelper.instance;
   var selectedValue = promptModelList.first;
+  late var configTableRow;
 
   final _apiEditController = TextEditingController();
   bool _isObscure = true;
@@ -101,13 +102,18 @@ class SettingsState extends State<Settings> {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        Map<String, dynamic> row = {
-                          DatabaseHelper.columnId: 1,
-                          'apikey': _apiEditController.text
-                        };
-                        final rowsAffected =
-                            await dbHelper.update(userTableName, row);
-                        print('更新しました。 ID：$rowsAffected ');
+                        if (configTableRow.length == 0) {
+                          Map<String, dynamic> row = {
+                            'apikey': _apiEditController.text
+                          };
+                          await dbHelper.insert(userTableName, row);
+                        } else {
+                          Map<String, dynamic> row = {
+                            DatabaseHelper.columnId: 1,
+                            'apikey': _apiEditController.text
+                          };
+                          await dbHelper.update(userTableName, row);
+                        }
                       },
                       child: const Text('Save'),
                     ))),
@@ -116,7 +122,9 @@ class SettingsState extends State<Settings> {
   }
 
   void _dbinit() async {
-    final allRows = await dbHelper.queryAllRows(userTableName);
-    _apiEditController.text = allRows.first['apikey'];
+    configTableRow = await dbHelper.queryAllRows(userTableName);
+    if (configTableRow.length > 0) {
+      _apiEditController.text = configTableRow.first['apikey'];
+    }
   }
 }

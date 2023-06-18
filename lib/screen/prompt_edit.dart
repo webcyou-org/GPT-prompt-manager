@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/const.dart';
+import '../db/database_helper.dart';
 
 class PromptEdit extends StatefulWidget {
   const PromptEdit({Key? key}) : super(key: key);
@@ -9,6 +10,10 @@ class PromptEdit extends StatefulWidget {
 }
 
 class PromptEditState extends State<PromptEdit> {
+  final dbHelper = DatabaseHelper.instance;
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -25,6 +30,7 @@ class PromptEditState extends State<PromptEdit> {
                 ),
                 child: SizedBox(
                     child: TextFormField(
+                  controller: _titleController,
                   decoration: inputDecoration('Prompt Name'),
                   style: inputTextStyle(),
                 ))),
@@ -37,6 +43,7 @@ class PromptEditState extends State<PromptEdit> {
                 ),
                 child: SizedBox(
                     child: TextFormField(
+                  controller: _valueController,
                   keyboardType: TextInputType.multiline,
                   maxLines: 20,
                   minLines: 10,
@@ -53,7 +60,15 @@ class PromptEditState extends State<PromptEdit> {
                         backgroundColor: const Color(0xFF5E47D2),
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        Map<String, dynamic> row = {
+                          'title': _titleController.text,
+                          'value': _valueController.text,
+                        };
+                        final rowsAffected =
+                            await dbHelper.insert(promptsTableName, row);
+                        print(rowsAffected);
+                      },
                       child: const Text('Save'),
                     ))),
           ])),
