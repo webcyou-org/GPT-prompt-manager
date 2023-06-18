@@ -36,8 +36,8 @@ class Prompt extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: const [
-                          PromptList(),
+                        children: [
+                          PromptList(onCallback: (prompt) => {print(prompt)}),
                         ],
                       )))),
         ],

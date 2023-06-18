@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:prompt_manager/utils/const.dart';
 import '../db/database_helper.dart';
+import '../models/prompt.dart';
 
 class PromptList extends StatefulWidget {
-  const PromptList({Key? key}) : super(key: key);
+  final ValueChanged<Prompt> onCallback;
+  const PromptList({super.key, required this.onCallback});
 
   @override
   PromptListState createState() => PromptListState();
@@ -11,14 +13,28 @@ class PromptList extends StatefulWidget {
 
 class PromptListState extends State<PromptList> {
   final dbHelper = DatabaseHelper.instance;
-  late Future<List<dynamic>> customPromptList;
+  late Future<List<Prompt>> customPromptList;
+
+  void _onClickPrompt(Prompt prompt) {
+    setState(() {
+      widget.onCallback(prompt);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    customPromptList = Future<List<dynamic>>(
+    customPromptList = Future<List<Prompt>>(
       () async {
-        return await dbHelper.queryAllRows(promptsTableName);
+        final allRows = await dbHelper.queryAllRows(promptsTableName);
+        final List<Prompt> promptList = allRows
+            .map((prompt) => Prompt(
+                  id: prompt['_id'],
+                  title: prompt['title'],
+                  value: prompt['value'],
+                ))
+            .toList();
+        return promptList;
       },
     );
   }
@@ -36,7 +52,7 @@ class PromptListState extends State<PromptList> {
               primary: false,
               itemCount: promptList.length,
               itemBuilder: (BuildContext context, int index) =>
-                  _promptItem(promptList[index]['title']),
+                  _promptItem(promptList[index]),
             );
           }
           return ListView.builder(
@@ -44,11 +60,11 @@ class PromptListState extends State<PromptList> {
               primary: false,
               itemCount: 0,
               itemBuilder: (BuildContext context, int index) =>
-                  _promptItem(''));
+                  _promptItem(Prompt()));
         });
   }
 
-  Widget _promptItem(String title) {
+  Widget _promptItem(Prompt prompt) {
     return GestureDetector(
       child: Container(
           padding: const EdgeInsets.only(top: 16.0, bottom: 16, left: 60),
@@ -61,14 +77,14 @@ class PromptListState extends State<PromptList> {
                 margin: const EdgeInsets.all(10.0),
               ),
               Text(
-                title,
+                prompt.title,
                 style:
                     const TextStyle(color: Color(0xff374151), fontSize: 18.0),
               ),
             ],
           )),
       onTap: () {
-        print("onTap called.");
+        _onClickPrompt(prompt);
       },
     );
   }
