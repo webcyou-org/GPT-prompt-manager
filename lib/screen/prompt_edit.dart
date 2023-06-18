@@ -67,7 +67,6 @@ class PromptEditState extends State<PromptEdit> {
                         };
                         final rowsAffected =
                             await dbHelper.insert(promptsTableName, row);
-                        print(rowsAffected);
                       },
                       child: const Text('Save'),
                     ))),

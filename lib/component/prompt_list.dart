@@ -1,13 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:prompt_manager/utils/const.dart';
 import '../db/database_helper.dart';
 
 class PromptList extends StatefulWidget {
-  final ValueChanged<String>? onChanged;
-
-  const PromptList({Key? key, this.onChanged}) : super(key: key);
+  const PromptList({Key? key}) : super(key: key);
 
   @override
   PromptListState createState() => PromptListState();

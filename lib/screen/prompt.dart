@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import '../component/prompt_list.dart';
 
-class Prompt extends StatefulWidget {
-  const Prompt({Key? key}) : super(key: key);
+class Prompt extends StatelessWidget {
+  const Prompt({Key? key, required this.onClickPromptNew}) : super(key: key);
 
-  @override
-  PromptState createState() => PromptState();
-}
+  final Function() onClickPromptNew;
 
-class PromptState extends State<Prompt> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -30,7 +27,9 @@ class PromptState extends State<Prompt> {
                       backgroundColor: const Color(0xFF5E47D2),
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      onClickPromptNew();
+                    },
                   ))),
           Expanded(
               child: SingleChildScrollView(

@@ -56,29 +56,45 @@ class PromptManagerState extends State<PromptManager> {
             },
           ),
           SelectContent(
-              index: _selectedIndex, detailIndex: _selectedDetailIndex)
+              index: _selectedIndex,
+              detailIndex: _selectedDetailIndex,
+              changePageCallBack: (detailIndex) {
+                setState(() {
+                  _selectedDetailIndex = detailIndex;
+                });
+              })
         ]));
   }
 }
 
 class SelectContent extends StatelessWidget {
   const SelectContent(
-      {super.key, required this.index, required this.detailIndex});
+      {super.key,
+      required this.index,
+      required this.detailIndex,
+      required this.changePageCallBack});
   final int index;
   final int detailIndex;
+  final Function(int) changePageCallBack;
 
   @override
   Widget build(BuildContext context) {
-    const List<Widget> _pages = [Home(), Prompt(), Settings()];
-    const List<Widget> _detailPages = [PromptEdit()];
+    List<Widget> pages = [
+      const Home(),
+      Prompt(onClickPromptNew: () {
+        changePageCallBack(1);
+      }),
+      const Settings()
+    ];
+    const List<Widget> detailPages = [PromptEdit()];
 
     if (detailIndex == 0) {
-      if (_pages.length <= index) {
-        return _pages[0];
+      if (pages.length <= index) {
+        return pages[0];
       }
     } else {
-      return _detailPages[detailIndex - 1];
+      return detailPages[detailIndex - 1];
     }
-    return _pages[index];
+    return pages[index];
   }
 }
