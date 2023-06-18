@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'const.dart';
 
-void callOpenAPI(String message, String token) async {
+dynamic callOpenAPI(String message, String token) async {
   var url = Uri.parse(chatGPTEndpoint);
 
   var response = await http.post(url,
@@ -14,5 +14,5 @@ void callOpenAPI(String message, String token) async {
         'Content-Type': 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $token',
       });
-  print(utf8.decode(response.bodyBytes));
+  return utf8.decode(response.bodyBytes);
 }

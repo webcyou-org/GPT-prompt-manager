@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:convert' as convert;
 import '../component/message_list.dart';
 import '../utils/const.dart';
 import '../utils/http_helper.dart';
 import '../db/database_helper.dart';
+import '../models/message.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final messageListKey = GlobalObjectKey<MessageListState>(context);
     final Size size = MediaQuery.of(context).size;
 
     return Expanded(
@@ -28,8 +31,8 @@ class HomeState extends State<Home> {
               child: Padding(
                   padding: const EdgeInsets.only(bottom: 100),
                   child: Column(
-                    children: const [
-                      MessageList(),
+                    children: [
+                      MessageList(key: messageListKey),
                     ],
                   ))),
           Positioned(
@@ -59,8 +62,20 @@ class HomeState extends State<Home> {
                             icon: const Icon(Icons.send),
                             onPressed: () async {
                               if (_messageController.text.isEmpty) return;
+
+                              messageListKey.currentState?.setMessage(Message(
+                                  text: _messageController.text,
+                                  isChatGPT: false));
+
                               var apiKey = await _getApiKey();
-                              callOpenAPI(_messageController.text, apiKey);
+                              var result = await callOpenAPI(
+                                  _messageController.text, apiKey);
+                              Map<String, dynamic> resultMap = convert.json
+                                  .decode(result) as Map<String, dynamic>;
+
+                              messageListKey.currentState?.setMessage(Message(
+                                  text: resultMap['choices'][0]['text'],
+                                  isChatGPT: true));
                             }),
                         border: inputBorder(),
                         labelText: 'Send message.',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/message.dart';
 
 class MessageList extends StatefulWidget {
   final ValueChanged<String>? onChanged;
@@ -10,22 +11,20 @@ class MessageList extends StatefulWidget {
 }
 
 class MessageListState extends State<MessageList> {
+  List<Message> messageList = [];
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: 30,
-      itemBuilder: (BuildContext context, int index) => _messageItem(
-        "以下の文章から誤字・脱字、タイプミスを見つけました。\n ・「どもです。」 → 「こんにちは。」\n ・「久々な感じです。」 → 「久しぶりの感じです。」 ${index + 1}",
-        index % 2 == 0
-            ? Image.asset('assets/images/icon_chatgpt.png')
-            : Image.asset('assets/images/icon_user.png'),
-      ),
+      itemCount: messageList.length,
+      itemBuilder: (BuildContext context, int index) =>
+          _messageItem(messageList[index].text, messageList[index].isChatGPT),
     );
   }
 
-  Widget _messageItem(String message, Image icon) {
+  Widget _messageItem(String message, bool isChatGPT) {
     return Container(
         padding:
             const EdgeInsets.only(top: 16, bottom: 16, left: 60, right: 40),
@@ -36,7 +35,9 @@ class MessageListState extends State<MessageList> {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(right: 36.0),
-              child: icon,
+              child: isChatGPT
+                  ? Image.asset('assets/images/icon_chatgpt.png')
+                  : Image.asset('assets/images/icon_user.png'),
             ),
             Flexible(
                 child: Text(
@@ -45,5 +46,11 @@ class MessageListState extends State<MessageList> {
             )),
           ],
         ));
+  }
+
+  setMessage(Message message) {
+    setState(() {
+      messageList.add(message);
+    });
   }
 }
