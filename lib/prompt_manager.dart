@@ -5,6 +5,7 @@ import 'screen/prompt.dart';
 import 'screen/prompt_edit.dart';
 import 'screen/settings.dart';
 import 'db/database_helper.dart';
+import 'models/prompt.dart' as PromptModel;
 
 class PromptManager extends StatefulWidget {
   final ValueChanged<String>? onChanged;
@@ -20,6 +21,7 @@ class PromptManagerState extends State<PromptManager> {
 
   int _selectedIndex = 0;
   int _selectedDetailIndex = 0;
+  PromptModel.Prompt? _selectedPrompt = null;
 
   @override
   Widget build(BuildContext context) {
@@ -58,32 +60,45 @@ class PromptManagerState extends State<PromptManager> {
           SelectContent(
               index: _selectedIndex,
               detailIndex: _selectedDetailIndex,
-              changePageCallBack: (detailIndex) {
+              changePageCallBack: (detailIndex, [PromptModel.Prompt? prompt]) {
+                if (detailIndex == 2) {
+                  _selectedPrompt = prompt!;
+                }
                 setState(() {
                   _selectedDetailIndex = detailIndex;
                 });
-              })
+              },
+              selectedPrompt: _selectedPrompt)
         ]));
   }
 }
 
 class SelectContent extends StatelessWidget {
-  const SelectContent(
-      {super.key,
-      required this.index,
-      required this.detailIndex,
-      required this.changePageCallBack});
+  const SelectContent({
+    super.key,
+    required this.index,
+    required this.detailIndex,
+    required this.changePageCallBack,
+    required this.selectedPrompt,
+  });
+
   final int index;
   final int detailIndex;
-  final Function(int) changePageCallBack;
+  final Function changePageCallBack;
+  final PromptModel.Prompt? selectedPrompt;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
       const Home(),
-      Prompt(onClickPromptNew: () {
-        changePageCallBack(1);
-      }),
+      Prompt(
+        onClickPromptNew: () {
+          changePageCallBack(1);
+        },
+        onClickPromptList: (prompt) {
+          changePageCallBack(2, prompt);
+        },
+      ),
       const Settings()
     ];
     const List<Widget> detailPages = [PromptEdit()];
@@ -93,6 +108,9 @@ class SelectContent extends StatelessWidget {
         return pages[0];
       }
     } else {
+      if (detailIndex == 2) {
+        return PromptEdit(prompt: selectedPrompt);
+      }
       return detailPages[detailIndex - 1];
     }
     return pages[index];

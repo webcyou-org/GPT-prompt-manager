@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import '../component/prompt_list.dart';
 
 class Prompt extends StatelessWidget {
-  const Prompt({Key? key, required this.onClickPromptNew}) : super(key: key);
+  const Prompt(
+      {Key? key,
+      required this.onClickPromptNew,
+      required this.onClickPromptList})
+      : super(key: key);
 
   final Function() onClickPromptNew;
+  final Function onClickPromptList;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,9 @@ class Prompt extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
                         children: [
-                          PromptList(onCallback: (prompt) => {print(prompt)}),
+                          PromptList(
+                              onCallback: (prompt) =>
+                                  onClickPromptList(prompt)),
                         ],
                       )))),
         ],

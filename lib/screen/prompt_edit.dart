@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../utils/const.dart';
 import '../db/database_helper.dart';
+import '../models/prompt.dart';
 
 class PromptEdit extends StatefulWidget {
-  const PromptEdit({Key? key}) : super(key: key);
+  final Prompt? prompt;
+
+  const PromptEdit({Key? key, Prompt? this.prompt}) : super(key: key);
 
   @override
   PromptEditState createState() => PromptEditState();
@@ -13,9 +16,17 @@ class PromptEditState extends State<PromptEdit> {
   final dbHelper = DatabaseHelper.instance;
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
+  bool isEdit = false;
 
   @override
   Widget build(BuildContext context) {
+    isEdit = widget.prompt != null;
+
+    if (isEdit) {
+      final Prompt prompt = widget.prompt!;
+      _titleController.text = prompt.title;
+      _valueController.text = prompt.value;
+    }
     return Expanded(
       child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -61,12 +72,20 @@ class PromptEditState extends State<PromptEdit> {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        Map<String, dynamic> row = {
-                          'title': _titleController.text,
-                          'value': _valueController.text,
-                        };
-                        final rowsAffected =
-                            await dbHelper.insert(promptsTableName, row);
+                        if (isEdit) {
+                          Map<String, dynamic> row = {
+                            '_id': widget.prompt!.id,
+                            'title': _titleController.text,
+                            'value': _valueController.text,
+                          };
+                          await dbHelper.update(promptsTableName, row);
+                        } else {
+                          Map<String, dynamic> row = {
+                            'title': _titleController.text,
+                            'value': _valueController.text,
+                          };
+                          await dbHelper.insert(promptsTableName, row);
+                        }
                       },
                       child: const Text('Save'),
                     ))),
