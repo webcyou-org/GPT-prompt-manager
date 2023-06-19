@@ -40,7 +40,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  void onChanged(String selectedName) {
+  void onChanged(selectedName) {
     print(selectedName);
   }
 }
