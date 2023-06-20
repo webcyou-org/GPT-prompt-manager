@@ -31,14 +31,15 @@ class HomeState extends State<Home> {
     return Expanded(
       child: Stack(
         children: [
-          SingleChildScrollView(
-              child: Padding(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  child: Column(
-                    children: [
-                      MessageList(key: messageListKey),
-                    ],
-                  ))),
+          Positioned.fill(
+              child: SingleChildScrollView(
+                  child: Padding(
+                      padding: const EdgeInsets.only(bottom: 100),
+                      child: Column(
+                        children: [
+                          MessageList(key: messageListKey),
+                        ],
+                      )))),
           Positioned(
             left: 80,
             bottom: 30,
@@ -85,6 +86,8 @@ class HomeState extends State<Home> {
                                             isChatGPT: false));
 
                                     var apiKey = await _getApiKey();
+
+                                    _messageController.text = '';
                                     var result =
                                         await callOpenAPI(sendMessage, apiKey);
                                     Map<String, dynamic> resultMap =
