@@ -5,9 +5,13 @@ import '../utils/const.dart';
 import '../utils/http_helper.dart';
 import '../db/database_helper.dart';
 import '../models/message.dart';
+import '../models/prompt.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final Future<Prompt>? selectedPrompt;
+
+  const Home({Key? key, required Future<Prompt>? this.selectedPrompt})
+      : super(key: key);
 
   @override
   HomeState createState() => HomeState();
@@ -52,38 +56,55 @@ class HomeState extends State<Home> {
                 ),
                 child: SizedBox(
                     width: size.width * 0.8 - 40,
-                    child: TextFormField(
-                      controller: _messageController,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 6,
-                      minLines: 1,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                            icon: const Icon(Icons.send),
-                            onPressed: () async {
-                              if (_messageController.text.isEmpty) return;
+                    child: FutureBuilder(
+                        future: widget.selectedPrompt,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            controller: _messageController,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 6,
+                            minLines: 1,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  icon: const Icon(Icons.send),
+                                  onPressed: () async {
+                                    if (_messageController.text.isEmpty) return;
+                                    var sendMessage = _messageController.text;
+                                    var prompt;
 
-                              messageListKey.currentState?.setMessage(Message(
-                                  text: _messageController.text,
-                                  isChatGPT: false));
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      prompt = snapshot.data!;
+                                      sendMessage =
+                                          "${prompt.value} \n $sendMessage";
+                                    }
 
-                              var apiKey = await _getApiKey();
-                              var result = await callOpenAPI(
-                                  _messageController.text, apiKey);
-                              Map<String, dynamic> resultMap = convert.json
-                                  .decode(result) as Map<String, dynamic>;
+                                    messageListKey.currentState?.setMessage(
+                                        Message(
+                                            text: sendMessage,
+                                            isChatGPT: false));
 
-                              messageListKey.currentState?.setMessage(Message(
-                                  text: resultMap['choices'][0]['text'],
-                                  isChatGPT: true));
-                            }),
-                        border: inputBorder(),
-                        labelText: 'Send message.',
-                        fillColor: Colors.white,
-                        filled: true,
-                      ),
-                      style: inputTextStyle(),
-                    ))),
+                                    var apiKey = await _getApiKey();
+                                    var result =
+                                        await callOpenAPI(sendMessage, apiKey);
+                                    Map<String, dynamic> resultMap =
+                                        convert.json.decode(result)
+                                            as Map<String, dynamic>;
+
+                                    messageListKey.currentState?.setMessage(
+                                        Message(
+                                            text: resultMap['choices'][0]
+                                                ['text'],
+                                            isChatGPT: true));
+                                  }),
+                              border: inputBorder(),
+                              labelText: 'Send message.',
+                              fillColor: Colors.white,
+                              filled: true,
+                            ),
+                            style: inputTextStyle(),
+                          );
+                        }))),
           )
         ],
       ),

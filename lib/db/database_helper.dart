@@ -52,6 +52,11 @@ class DatabaseHelper {
     return await db!.query(tableName);
   }
 
+  Future<List<Map<String, dynamic>>> queryRow(String tableName, int id) async {
+    Database? db = await instance.database;
+    return await db!.query(tableName, where: '$columnId = ?', whereArgs: [id]);
+  }
+
   Future<int?> queryRowCount(String tableName) async {
     Database? db = await instance.database;
     return Sqflite.firstIntValue(

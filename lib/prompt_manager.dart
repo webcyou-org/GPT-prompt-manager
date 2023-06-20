@@ -8,9 +8,7 @@ import 'db/database_helper.dart';
 import 'models/prompt.dart' as PromptModel;
 
 class PromptManager extends StatefulWidget {
-  final ValueChanged<String>? onChanged;
-
-  const PromptManager({Key? key, this.onChanged}) : super(key: key);
+  const PromptManager({Key? key}) : super(key: key);
 
   @override
   PromptManagerState createState() => PromptManagerState();
@@ -22,6 +20,7 @@ class PromptManagerState extends State<PromptManager> {
   int _selectedIndex = 0;
   int _selectedDetailIndex = 0;
   PromptModel.Prompt? _selectedPrompt = null;
+  late Future<PromptModel.Prompt>? _headerSelectedPrompt = null;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,11 @@ class PromptManagerState extends State<PromptManager> {
           setState(() {
             _selectedIndex = 1;
             _selectedDetailIndex = index;
+          });
+        }, onChangePromptMenu: (prompt) {
+          print(prompt);
+          setState(() {
+            _headerSelectedPrompt = prompt;
           });
         }),
         body: Row(children: [
@@ -68,29 +72,34 @@ class PromptManagerState extends State<PromptManager> {
                   _selectedDetailIndex = detailIndex;
                 });
               },
-              selectedPrompt: _selectedPrompt)
+              selectedPrompt: _selectedPrompt,
+              headerSelectedPrompt: _headerSelectedPrompt)
         ]));
   }
 }
 
 class SelectContent extends StatelessWidget {
-  const SelectContent({
+  SelectContent({
     super.key,
     required this.index,
     required this.detailIndex,
     required this.changePageCallBack,
     required this.selectedPrompt,
+    required this.headerSelectedPrompt,
   });
 
   final int index;
   final int detailIndex;
   final Function changePageCallBack;
   final PromptModel.Prompt? selectedPrompt;
+  late Future<PromptModel.Prompt>? headerSelectedPrompt;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      const Home(),
+      Home(
+        selectedPrompt: headerSelectedPrompt,
+      ),
       Prompt(
         onClickPromptNew: () {
           changePageCallBack(1);
