@@ -37,15 +37,28 @@ The body text will be automatically combined after the prompt and requested to o
 <img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/af3c51f1-8c7d-4d0c-b574-8b5f6a1f2581">
 
 
-### Pages
+## Pages
 
-#### Prompt Manage Page
+### Home
 
-<img width="800" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/fca4072d-9a85-4bf5-91ca-9efd89298b5d">
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/6434ad03-1e58-4215-a9b4-45fc71cfa8f4">
 
-#### OpenAI Setting Page
+### Prompt Manage Page
 
-<img width="600" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/c0ff4956-49e7-41ff-a563-edf1111f019b">
+#### Prompt List Page
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/f11cb971-ffd8-4187-ac59-73d981fefbdf">
+
+#### Prompt Edit & Create Page
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/4da05275-36e2-44bd-863d-3e4c20db5dee">
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/a7661b1e-8e15-4524-83ba-459c7d6bb1eb">
+
+### OpenAI Setting Page
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/0cf1dba2-1531-49fd-8dfb-4976e19fdf8d">
+
 
 ## Development
 
