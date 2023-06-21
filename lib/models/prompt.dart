@@ -1,7 +1,7 @@
 class Prompt {
-  int id;
-  String title;
-  String value;
+  final int id;
+  final String title;
+  final String value;
 
   Prompt({this.id = 0, this.title = '', this.value = ''}) {}
 }

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
 import '../component/prompt_list.dart';
 
-class Prompt extends StatelessWidget {
-  const Prompt(
-      {Key? key,
-      required this.onClickPromptNew,
-      required this.onClickPromptList})
-      : super(key: key);
-
-  final Function() onClickPromptNew;
-  final Function onClickPromptList;
+class Prompt extends ConsumerWidget {
+  const Prompt({Key? key}) : super(key: key);
+  // final Function onClickPromptList;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
       child: Column(
         children: [
@@ -33,7 +29,9 @@ class Prompt extends StatelessWidget {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      onClickPromptNew();
+                      ref
+                          .read(appProvider.notifier)
+                          .changePage(pageIndex: 1, pageDetailIndex: 2);
                     },
                   ))),
           Expanded(
@@ -42,9 +40,9 @@ class Prompt extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
                         children: [
-                          PromptList(
-                              onCallback: (prompt) =>
-                                  onClickPromptList(prompt)),
+                          // PromptList(
+                          //     onCallback: (prompt) =>
+                          //         onClickPromptList(prompt)),
                         ],
                       )))),
         ],
