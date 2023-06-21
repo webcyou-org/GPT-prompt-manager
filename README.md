@@ -6,6 +6,37 @@ This is a tool created with flutter that manages chatGPT prompts and can be used
 
 ## Usage
 
+### Step 1
+
+First, open the setting page and register the API key for openAI.
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/36c1d750-32a8-4ef0-a459-c90391b68541">
+
+### Step 2
+
+After registering the openAI API key, open the prompt page.
+
+This page will display a list of the registered prompts.
+
+Since you have not registered yet, click the new button to start the prompt registration.
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/723c5f29-6b59-45d9-99f2-ddc3bb2864bc">
+
+### Step 3
+
+Register any title and its content for the prompt you wish to register.
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/22ad5707-16d5-4c9a-8364-775e5bfc102a">
+
+### Step 4
+
+From the header menu, you will be able to select a registered prompt, select the prompt you wish to use, and enter the body text.
+
+The body text will be automatically combined after the prompt and requested to openAI.
+
+<img width="700" src="https://github.com/webcyou-org/GPT-prompt-manager/assets/1584153/af3c51f1-8c7d-4d0c-b574-8b5f6a1f2581">
+
+
 ### Pages
 
 #### Prompt Manage Page
