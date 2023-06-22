@@ -27,6 +27,7 @@ class PromptEditState extends State<PromptEdit> {
       _titleController.text = prompt.title;
       _valueController.text = prompt.value;
     }
+
     return Expanded(
       child: Padding(
           padding: const EdgeInsets.all(20.0),
