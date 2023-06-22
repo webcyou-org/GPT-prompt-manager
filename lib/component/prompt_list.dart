@@ -1,70 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:prompt_manager/utils/const.dart';
-import '../db/database_helper.dart';
-import '../models/prompt.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/db/database_helper.dart';
 
-class PromptList extends StatefulWidget {
-  final ValueChanged<Prompt> onCallback;
-  const PromptList({super.key, required this.onCallback});
+class PromptList extends ConsumerStatefulWidget {
+  const PromptList({Key? key}) : super(key: key);
 
   @override
   PromptListState createState() => PromptListState();
 }
 
-class PromptListState extends State<PromptList> {
-  final dbHelper = DatabaseHelper.instance;
-  late Future<List<Prompt>> customPromptList;
-
-  void _onClickPrompt(Prompt prompt) {
-    setState(() {
-      widget.onCallback(prompt);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    customPromptList = Future<List<Prompt>>(
-      () async {
-        final allRows = await dbHelper.queryAllRows(promptsTableName);
-        final List<Prompt> promptList = allRows
-            .map((prompt) => Prompt(
-                  id: prompt['_id'],
-                  title: prompt['title'],
-                  value: prompt['value'],
-                ))
-            .toList();
-        return promptList;
-      },
-    );
-  }
-
+class PromptListState extends ConsumerState<PromptList> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: customPromptList,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            var promptList = snapshot.data!;
-
-            return ListView.builder(
+    final promptListData = ref.watch(promptList);
+    return Container(
+        child: promptListData.when(
+      data: (data) {
+        return RefreshIndicator(
+            onRefresh: () async {},
+            child: ListView.builder(
               shrinkWrap: true,
               primary: false,
-              itemCount: promptList.length,
+              itemCount: data.length,
               itemBuilder: (BuildContext context, int index) =>
-                  _promptItem(promptList[index]),
-            );
-          }
-          return ListView.builder(
-              shrinkWrap: true,
-              primary: false,
-              itemCount: 0,
-              itemBuilder: (BuildContext context, int index) =>
-                  _promptItem(Prompt()));
-        });
+                  _promptItem(data[index]),
+            ));
+      },
+      error: (error, s) {},
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    ));
   }
 
-  Widget _promptItem(Prompt prompt) {
+  Widget _promptItem(dynamic prompt) {
     return GestureDetector(
       child: Container(
           padding: const EdgeInsets.only(top: 16.0, bottom: 16, left: 60),
@@ -84,7 +53,7 @@ class PromptListState extends State<PromptList> {
             ],
           )),
       onTap: () {
-        _onClickPrompt(prompt);
+        // _onClickPrompt(prompt);
       },
     );
   }

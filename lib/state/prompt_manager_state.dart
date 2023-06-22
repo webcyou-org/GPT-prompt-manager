@@ -26,4 +26,11 @@ class PromptState {
       value: value ?? this.value,
     );
   }
+
+  static PromptState fromJson(Map<String, dynamic> json) {
+    return PromptState(
+        id: json['_id'] ?? 0,
+        title: json['title'] ?? '',
+        value: json['value'] ?? '');
+  }
 }

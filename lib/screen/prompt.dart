@@ -39,7 +39,8 @@ class Prompt extends ConsumerWidget {
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: [
+                        children: const [
+                          PromptList()
                           // PromptList(
                           //     onCallback: (prompt) =>
                           //         onClickPromptList(prompt)),
