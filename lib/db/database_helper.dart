@@ -5,9 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import '../utils/const.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "prompt_manager.db";
-  static final _databaseVersion = 1;
-  static final columnId = '_id';
+  static const _databaseName = "prompt_manager.db";
+  static const _databaseVersion = 1;
+  static const columnId = '_id';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

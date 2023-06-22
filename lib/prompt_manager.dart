@@ -9,14 +9,12 @@ class PromptManager extends ConsumerWidget {
   const PromptManager({Key? key}) : super(key: key);
 
   // final dbHelper = DatabaseHelper.instance;
-  //
-  // PromptModel.Prompt? _selectedPrompt = null;
   // late Future<PromptModel.Prompt>? _headerSelectedPrompt = null;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int pageIndex = ref.watch(appProvider).pageIndex;
-    final selectedContent = ref.watch(appProvider).getContent();
+    final mainProvider = ref.watch(appProvider);
+    final mainProviderNotifier = ref.read(appProvider.notifier);
 
     return Scaffold(
         appBar: const Header(),
@@ -37,30 +35,13 @@ class PromptManager extends ConsumerWidget {
               ),
             ],
             backgroundColor: const Color(0xff202123),
-            // selectedIndex: _selectedIndex,
-            selectedIndex: pageIndex,
+            selectedIndex: mainProvider.pageIndex,
             onDestinationSelected: (index) {
-              ref
-                  .read(appProvider.notifier)
-                  .changePage(pageIndex: index, pageDetailIndex: 0);
+              mainProviderNotifier.changePage(
+                  pageIndex: index, pageDetailIndex: 0);
             },
           ),
-          selectedContent
-          // SelectContent()
-          // SelectContent(
-          //     index: _selectedIndex,
-          //     detailIndex: _selectedDetailIndex,
-          //     changePageCallBack: (detailIndex,
-          //         [PromptModel.Prompt? prompt]) {
-          //       if (detailIndex == 2) {
-          //         _selectedPrompt = prompt!;
-          //       }
-          //       // setState(() {
-          //       //   _selectedDetailIndex = detailIndex;
-          //       // });
-          //     },
-          //     selectedPrompt: _selectedPrompt,
-          //     headerSelectedPrompt: _headerSelectedPrompt)
+          mainProvider.selectedContent
         ]));
   }
 }
