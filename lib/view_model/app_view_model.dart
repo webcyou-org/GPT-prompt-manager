@@ -16,8 +16,12 @@ class AppStateNotifier extends StateNotifier<AppState> {
         state.copyWith(pageIndex: pageIndex, pageDetailIndex: pageDetailIndex);
   }
 
-  void setApikey({required apikey}) {
+  void setApikey(String apikey) {
     final userConfig = state.userConfig.copyWith(apikey: apikey);
     state = state.copyWith(userConfig: userConfig);
+  }
+
+  void setIsConfigTableRow(bool isConfigTableRow) {
+    state = state.copyWith(isConfigTableRow: isConfigTableRow);
   }
 }

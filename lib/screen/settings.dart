@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
 
-import '../utils/const.dart';
-import '../db/database_helper.dart';
+import 'package:prompt_manager/utils/const.dart';
+import 'package:prompt_manager/db/database_helper.dart';
 
 const promptModelList = ['text-davinci-003'];
 
@@ -17,22 +18,13 @@ class SettingsState extends ConsumerState<Settings> {
   final dbHelper = DatabaseHelper.instance;
   var selectedValue = promptModelList.first;
   final _apiEditController = TextEditingController();
-
   bool _isObscure = true;
-  bool _isConfigTableRow = false;
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(mainDbApikey).when(
-          loading: CircularProgressIndicator.new,
-          data: (data) => _apiEditController.text = data,
-          error: (error, stackTrace) => print('error: $error'),
-        );
-    ref.watch(isDbApikey).when(
-          loading: CircularProgressIndicator.new,
-          data: (data) => _isConfigTableRow = data! > 0,
-          error: (error, stackTrace) => print('error: $error'),
-        );
+    final openAPIKey = ref.read(appProvider).openAPIKey;
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    _apiEditController.text = openAPIKey;
 
     return Expanded(
       child: Padding(
@@ -113,18 +105,18 @@ class SettingsState extends ConsumerState<Settings> {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        if (_isConfigTableRow) {
-                          Map<String, dynamic> row = {
+                        Map<String, dynamic> row = {};
+                        if (ref.read(appProvider).isConfigTableRow) {
+                          row = {
                             DatabaseHelper.columnId: 1,
                             'apikey': _apiEditController.text
                           };
                           await dbHelper.update(userTableName, row);
                         } else {
-                          Map<String, dynamic> row = {
-                            'apikey': _apiEditController.text
-                          };
+                          row = {'apikey': _apiEditController.text};
                           await dbHelper.insert(userTableName, row);
                         }
+                        mainProviderNotifier.setApikey(_apiEditController.text);
                       },
                       child: const Text('Save'),
                     ))),
