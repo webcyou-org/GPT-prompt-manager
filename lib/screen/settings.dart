@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prompt_manager/main.dart';
-
 import 'package:prompt_manager/utils/const.dart';
-import 'package:prompt_manager/db/database_helper.dart';
 
 const promptModelList = ['text-davinci-003'];
 
@@ -15,7 +13,6 @@ class Settings extends ConsumerStatefulWidget {
 }
 
 class SettingsState extends ConsumerState<Settings> {
-  final dbHelper = DatabaseHelper.instance;
   var selectedValue = promptModelList.first;
   final _apiEditController = TextEditingController();
   bool _isObscure = true;
@@ -105,18 +102,8 @@ class SettingsState extends ConsumerState<Settings> {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        Map<String, dynamic> row = {};
-                        if (ref.read(appProvider).isConfigTableRow) {
-                          row = {
-                            DatabaseHelper.columnId: 1,
-                            'apikey': _apiEditController.text
-                          };
-                          await dbHelper.update(userTableName, row);
-                        } else {
-                          row = {'apikey': _apiEditController.text};
-                          await dbHelper.insert(userTableName, row);
-                        }
-                        mainProviderNotifier.setApikey(_apiEditController.text);
+                        mainProviderNotifier
+                            .registrationOpenApiKey(_apiEditController.text);
                       },
                       child: const Text('Save'),
                     ))),
