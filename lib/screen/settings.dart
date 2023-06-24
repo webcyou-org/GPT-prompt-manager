@@ -22,7 +22,7 @@ class SettingsState extends ConsumerState<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    final openAPIKey = ref.read(appProvider).openAPIKey;
+    final openAPIKey = ref.watch(appProvider).openAPIKey;
     final mainProviderNotifier = ref.read(appProvider.notifier);
     _apiEditController.text = openAPIKey;
 

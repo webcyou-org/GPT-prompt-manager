@@ -3,19 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import '../utils/const.dart';
+
+import 'package:prompt_manager/utils/const.dart';
 import 'package:prompt_manager/state/prompt_manager_state.dart';
 
 final mainDbProvider =
     Provider<DatabaseHelper>((ref) => DatabaseHelper.instance);
 
-final mainDbApikey = FutureProvider<String>((ref) async {
-  return ref.watch(mainDbProvider).apikey;
-});
-
-final isDbApikey = FutureProvider<int?>((ref) async {
-  return ref.watch(mainDbProvider).queryRowCount(userTableName);
-});
+// final mainDbApikey = FutureProvider<String>((ref) async {
+//   return ref.watch(mainDbProvider).apikey;
+// });
+//
+// final isDbApikey = FutureProvider<int?>((ref) async {
+//   return ref.watch(mainDbProvider).queryRowCount(userTableName);
+// });
 
 final promptList = FutureProvider<List<PromptState>>((ref) async {
   return ref.watch(mainDbProvider).promptList;
