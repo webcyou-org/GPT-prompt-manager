@@ -25,11 +25,16 @@ class PromptManagerViewState extends ConsumerState<PromptManager> {
 
   Future<void> initialize() async {
     final mainProviderNotifier = ref.read(appProvider.notifier);
+    final promptManagerNotifier = ref.read(promptManagerProvider.notifier);
+
     DatabaseHelper dbHelper = DatabaseHelper.instance;
     final apikey = await dbHelper.apikey;
     final configTableRowCount = await dbHelper.queryRowCount(userTableName);
+    final promptList = await dbHelper.promptList;
+
     mainProviderNotifier.setApikey(apikey);
     mainProviderNotifier.setIsConfigTableRow(configTableRowCount! > 0);
+    promptManagerNotifier.setPromptList(promptList);
   }
 
   @override

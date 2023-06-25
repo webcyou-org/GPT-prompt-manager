@@ -1,13 +1,22 @@
 class PromptManagerState {
   const PromptManagerState({
     this.selectedPrompt = const PromptState(id: 0, title: '', value: ''),
+    this.editPrompt = const PromptState(id: 0, title: '', value: ''),
+    required this.promptList,
   });
 
   final PromptState selectedPrompt;
+  final PromptState editPrompt;
+  final List<PromptState> promptList;
 
-  PromptManagerState copyWith({PromptState? selectedPrompt}) =>
+  PromptManagerState copyWith(
+          {PromptState? selectedPrompt,
+          PromptState? editPrompt,
+          List<PromptState>? promptList}) =>
       PromptManagerState(
         selectedPrompt: selectedPrompt ?? this.selectedPrompt,
+        editPrompt: editPrompt ?? this.editPrompt,
+        promptList: promptList ?? this.promptList,
       );
 }
 

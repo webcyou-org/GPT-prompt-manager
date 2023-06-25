@@ -6,7 +6,6 @@ import 'package:prompt_manager/component/prompt_list.dart';
 
 class Prompt extends ConsumerWidget {
   const Prompt({Key? key}) : super(key: key);
-  // final Function onClickPromptList;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,12 +35,7 @@ class Prompt extends ConsumerWidget {
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: const [
-                          PromptList()
-                          // PromptList(
-                          //     onCallback: (prompt) =>
-                          //         onClickPromptList(prompt)),
-                        ],
+                        children: const [PromptList()],
                       )))),
         ],
       ),

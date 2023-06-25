@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prompt_manager/db/database_helper.dart';
+import 'package:prompt_manager/main.dart';
 
-class PromptList extends ConsumerStatefulWidget {
+class PromptList extends ConsumerWidget {
   const PromptList({Key? key}) : super(key: key);
 
   @override
-  PromptListState createState() => PromptListState();
-}
-
-class PromptListState extends ConsumerState<PromptList> {
-  @override
-  Widget build(BuildContext context) {
-    final promptListData = ref.watch(promptList);
-    return Container(
-        child: promptListData.when(
-      data: (data) {
-        return RefreshIndicator(
-            onRefresh: () async {},
-            child: ListView.builder(
-              shrinkWrap: true,
-              primary: false,
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  _promptItem(data[index]),
-            ));
-      },
-      error: (error, s) {},
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    ));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final promptList = ref.watch(promptManagerProvider).promptList;
+    return ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: promptList.length,
+      itemBuilder: (BuildContext context, int index) =>
+          _promptItem(promptList[index]),
+    );
   }
 
   Widget _promptItem(dynamic prompt) {
@@ -53,6 +37,7 @@ class PromptListState extends ConsumerState<PromptList> {
             ],
           )),
       onTap: () {
+        print(prompt);
         // _onClickPrompt(prompt);
       },
     );
