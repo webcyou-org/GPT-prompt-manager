@@ -29,6 +29,12 @@ class PromptManagerStateNotifier extends StateNotifier<PromptManagerState> {
     state = state.copyWith(editPrompt: editPrompt);
   }
 
+  void setEditPrompt(prompt) {
+    final editPrompt = state.editPrompt
+        .copyWith(id: prompt.id, title: prompt.title, value: prompt.value);
+    state = state.copyWith(editPrompt: editPrompt);
+  }
+
   void resetEditPrompt() {
     final editPrompt = state.editPrompt.copyWith(id: 0, title: '', value: '');
     state = state.copyWith(editPrompt: editPrompt);

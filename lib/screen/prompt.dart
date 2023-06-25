@@ -9,6 +9,9 @@ class Prompt extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
+
     return Expanded(
       child: Column(
         children: [
@@ -25,9 +28,9 @@ class Prompt extends ConsumerWidget {
                     label: const Text('New'),
                     style: primaryButtonStyle(),
                     onPressed: () {
-                      ref
-                          .read(appProvider.notifier)
-                          .changePage(pageIndex: 1, pageDetailIndex: 2);
+                      promptProviderNotifier.resetEditPrompt();
+                      mainProviderNotifier.changePage(
+                          pageIndex: 1, pageDetailIndex: 2);
                     },
                   ))),
           Expanded(

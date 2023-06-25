@@ -13,11 +13,14 @@ class PromptList extends ConsumerWidget {
       primary: false,
       itemCount: promptList.length,
       itemBuilder: (BuildContext context, int index) =>
-          _promptItem(promptList[index]),
+          _promptItem(promptList[index], ref),
     );
   }
 
-  Widget _promptItem(dynamic prompt) {
+  Widget _promptItem(dynamic prompt, WidgetRef ref) {
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
+
     return GestureDetector(
       child: Container(
           padding: const EdgeInsets.only(top: 16.0, bottom: 16, left: 60),
@@ -37,7 +40,8 @@ class PromptList extends ConsumerWidget {
             ],
           )),
       onTap: () {
-        print(prompt);
+        promptProviderNotifier.setEditPrompt(prompt);
+        mainProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 2);
         // _onClickPrompt(prompt);
       },
     );
