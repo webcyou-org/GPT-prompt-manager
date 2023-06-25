@@ -20,7 +20,7 @@ class PromptSelectBox extends ConsumerWidget {
             appProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 1);
           },
         ),
-        Select(),
+        const Select(),
         IconButton(
           icon: const Icon(Icons.edit_note),
           onPressed: () {
