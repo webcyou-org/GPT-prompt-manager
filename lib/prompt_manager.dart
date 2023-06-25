@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:prompt_manager/main.dart';
 import 'package:prompt_manager/component/header.dart';
 import 'package:prompt_manager/db/database_helper.dart';
 import 'package:prompt_manager/utils/const.dart';
-
-// import 'models/prompt.dart' as PromptModel;
 
 class PromptManager extends ConsumerStatefulWidget {
   const PromptManager({Key? key}) : super(key: key);
@@ -16,7 +13,6 @@ class PromptManager extends ConsumerStatefulWidget {
 }
 
 class PromptManagerViewState extends ConsumerState<PromptManager> {
-  // late Future<PromptModel.Prompt>? _headerSelectedPrompt = null;
   @override
   void initState() {
     super.initState();

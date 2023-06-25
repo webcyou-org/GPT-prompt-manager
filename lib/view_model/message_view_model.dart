@@ -1,7 +1,6 @@
 import 'dart:convert' as convert;
 import 'package:prompt_manager/state/message_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:prompt_manager/utils/http_helper.dart';
 
 class MessageStateNotifier extends StateNotifier<MessageManager> {

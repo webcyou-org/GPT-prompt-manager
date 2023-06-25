@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'prompt_manager.dart';
-
 import 'package:prompt_manager/state/app_state.dart';
 import 'package:prompt_manager/view_model/app_view_model.dart';
 import 'package:prompt_manager/state/prompt_manager_state.dart';

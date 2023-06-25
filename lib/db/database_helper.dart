@@ -10,18 +10,13 @@ import 'package:prompt_manager/state/prompt_manager_state.dart';
 final mainDbProvider =
     Provider<DatabaseHelper>((ref) => DatabaseHelper.instance);
 
-// final mainDbApikey = FutureProvider<String>((ref) async {
-//   return ref.watch(mainDbProvider).apikey;
-// });
-//
-// final isDbApikey = FutureProvider<int?>((ref) async {
-//   return ref.watch(mainDbProvider).queryRowCount(userTableName);
-// });
-
 final promptList = FutureProvider<List<PromptState>>((ref) async {
   return ref.watch(mainDbProvider).promptList;
 });
 
+// final mainDbApikey = FutureProvider<String>((ref) async {
+//   return ref.watch(mainDbProvider).apikey;
+// });
 // final notesInsertion = FutureProvider.family<Todo, dynamic>((ref, todo) {
 //   return ref.watch(mainDbProvider).insert(todo);
 // });
