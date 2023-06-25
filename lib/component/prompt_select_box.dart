@@ -9,19 +9,24 @@ class PromptSelectBox extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appProviderNotifier = ref.read(appProvider.notifier);
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
 
     return Row(
       children: [
         IconButton(
           icon: const Icon(Icons.add_circle_outline),
           onPressed: () {
+            promptProviderNotifier.resetEditPrompt();
             appProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 1);
           },
         ),
-        Select(onChanged: (promptId) => {}),
+        Select(),
         IconButton(
           icon: const Icon(Icons.edit_note),
           onPressed: () {
+            final selectedPrompt =
+                ref.read(promptManagerProvider).selectedPrompt;
+            promptProviderNotifier.setEditPrompt(selectedPrompt);
             appProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 1);
           },
         ),

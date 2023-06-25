@@ -14,6 +14,15 @@ class PromptManagerStateNotifier extends StateNotifier<PromptManagerState> {
     state = const PromptManagerState(promptList: []);
   }
 
+  PromptState findPromptById(id) {
+    return state.promptList.firstWhere((prompt) => prompt.id == int.parse(id));
+  }
+
+  void changeSelectedPrompt(id) {
+    final selectedPrompt = findPromptById(id);
+    state = state.copyWith(selectedPrompt: selectedPrompt);
+  }
+
   void selectPrompt({required id, required title, required value}) {
     final selectedPrompt =
         state.selectedPrompt.copyWith(id: id, title: title, value: value);
