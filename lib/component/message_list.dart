@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import '../models/message.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
 
-class MessageList extends StatefulWidget {
-  final ValueChanged<String>? onChanged;
-
-  const MessageList({Key? key, this.onChanged}) : super(key: key);
-
-  @override
-  MessageListState createState() => MessageListState();
-}
-
-class MessageListState extends State<MessageList> {
-  List<Message> messageList = [];
+class MessageList extends ConsumerWidget {
+  const MessageList({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final messageList = ref.watch(messageManagerProvider).messageList;
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
@@ -52,11 +45,5 @@ class MessageListState extends State<MessageList> {
                 ],
               )
             ]));
-  }
-
-  setMessage(Message message) {
-    setState(() {
-      messageList.add(message);
-    });
   }
 }

@@ -55,3 +55,11 @@ Text titleText(text) {
         fontWeight: FontWeight.bold,
       ));
 }
+
+ButtonStyle primaryButtonStyle() {
+  return ElevatedButton.styleFrom(
+    minimumSize: const Size(80, 40),
+    backgroundColor: const Color(0xFF5E47D2),
+    foregroundColor: Colors.white,
+  );
+}

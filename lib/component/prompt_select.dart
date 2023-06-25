@@ -1,44 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:prompt_manager/utils/const.dart';
-import '../db/database_helper.dart';
-import '../models/prompt.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
 
-var spriteNameList = [Prompt(title: 'Article Correction')];
-
-class Select extends StatefulWidget {
-  final ValueChanged<dynamic>? onChanged;
-
-  const Select({Key? key, this.onChanged}) : super(key: key);
+class Select extends ConsumerStatefulWidget {
+  const Select({Key? key}) : super(key: key);
 
   @override
   SelectState createState() => SelectState();
 }
 
-class SelectState extends State<Select> {
-  final dbHelper = DatabaseHelper.instance;
-  late Future<List<Prompt>> customPromptList;
+class SelectState extends ConsumerState<Select> {
   var selectedValue;
 
   @override
-  void initState() {
-    super.initState();
-    customPromptList = Future<List<Prompt>>(
-      () async {
-        final allRows = await dbHelper.queryAllRows(promptsTableName);
-        final List<Prompt> promptList = allRows
-            .map((prompt) => Prompt(
-                  id: prompt['_id'],
-                  title: prompt['title'],
-                  value: prompt['value'],
-                ))
-            .toList();
-        return promptList;
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final promptList = ref.watch(promptManagerProvider).promptList;
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
+
     return SizedBox(
         width: 256,
         height: 36,
@@ -49,40 +27,29 @@ class SelectState extends State<Select> {
             ),
             child: Padding(
                 padding: const EdgeInsets.only(left: 40.0),
-                child: FutureBuilder(
-                    future: customPromptList,
-                    builder: (context, snapshot) {
-                      var promptList = [Prompt()];
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        promptList.removeLast();
-                        promptList = snapshot.data!;
-                      }
-
-                      return DropdownButton(
-                        isExpanded: true,
-                        value: selectedValue,
-                        underline: Container(),
-                        items: _getDropdownMenuItemList(promptList),
-                        onChanged: (value) {
-                          widget.onChanged!(value!);
-                          setState(() {
-                            selectedValue = value!;
-                          });
-                        },
-                        // selectedItemBuilder: (BuildContext context) {
-                        //   return spriteNameList.map((String value) {
-                        //     return Align(
-                        //       alignment: Alignment.centerLeft,
-                        //       child: Text(
-                        //         selectedValue,
-                        //         style:
-                        //             const TextStyle(color: Color(0xff424242)),
-                        //       ),
-                        //     );
-                        //   }).toList();
-                        // },
-                      );
-                    }))));
+                child: DropdownButton(
+                  isExpanded: true,
+                  value: selectedValue,
+                  underline: Container(),
+                  items: _getDropdownMenuItemList(promptList),
+                  onChanged: (value) {
+                    promptProviderNotifier.changeSelectedPrompt(value);
+                    setState(() {
+                      selectedValue = value!;
+                    });
+                  },
+                  // selectedItemBuilder: (BuildContext context) {
+                  //   return promptList.map((prompt) {
+                  //     return Align(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: Text(
+                  //         selectedValue,
+                  //         style: const TextStyle(color: Color(0xff424242)),
+                  //       ),
+                  //     );
+                  //   }).toList();
+                  // },
+                ))));
   }
 
   List<DropdownMenuItem<String>> _getDropdownMenuItemList(promptList) {

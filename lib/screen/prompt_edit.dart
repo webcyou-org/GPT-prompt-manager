@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
-import '../utils/const.dart';
-import '../db/database_helper.dart';
-import '../models/prompt.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
+import 'package:prompt_manager/utils/const.dart';
 
-class PromptEdit extends StatefulWidget {
-  final Prompt? prompt;
-
-  const PromptEdit({Key? key, Prompt? this.prompt}) : super(key: key);
+class PromptEdit extends ConsumerStatefulWidget {
+  const PromptEdit({Key? key}) : super(key: key);
 
   @override
   PromptEditState createState() => PromptEditState();
 }
 
-class PromptEditState extends State<PromptEdit> {
-  final dbHelper = DatabaseHelper.instance;
+class PromptEditState extends ConsumerState<PromptEdit> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
-  bool isEdit = false;
 
   @override
   Widget build(BuildContext context) {
-    isEdit = widget.prompt != null;
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
+    final editPrompt = ref.watch(promptManagerProvider).editPrompt;
+    _titleController.text = editPrompt.title;
+    _valueController.text = editPrompt.value;
 
-    if (isEdit) {
-      final Prompt prompt = widget.prompt!;
-      _titleController.text = prompt.title;
-      _valueController.text = prompt.value;
-    }
     return Expanded(
       child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -66,26 +61,14 @@ class PromptEditState extends State<PromptEdit> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(80, 40),
-                        backgroundColor: const Color(0xFF5E47D2),
-                        foregroundColor: Colors.white,
-                      ),
+                      style: primaryButtonStyle(),
                       onPressed: () async {
-                        if (isEdit) {
-                          Map<String, dynamic> row = {
-                            '_id': widget.prompt!.id,
-                            'title': _titleController.text,
-                            'value': _valueController.text,
-                          };
-                          await dbHelper.update(promptsTableName, row);
-                        } else {
-                          Map<String, dynamic> row = {
-                            'title': _titleController.text,
-                            'value': _valueController.text,
-                          };
-                          await dbHelper.insert(promptsTableName, row);
-                        }
+                        promptProviderNotifier.changeEditPrompt(
+                            title: _titleController.text,
+                            value: _valueController.text);
+                        await promptProviderNotifier.registrationPrompt();
+                        promptProviderNotifier.resetEditPrompt();
+                        mainProviderNotifier.changePage(pageIndex: 1);
                       },
                       child: const Text('Save'),
                     ))),

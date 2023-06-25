@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import '../component/prompt_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
+import 'package:prompt_manager/utils/const.dart';
+import 'package:prompt_manager/component/prompt_list.dart';
 
-class Prompt extends StatelessWidget {
-  const Prompt(
-      {Key? key,
-      required this.onClickPromptNew,
-      required this.onClickPromptList})
-      : super(key: key);
-
-  final Function() onClickPromptNew;
-  final Function onClickPromptList;
+class Prompt extends ConsumerWidget {
+  const Prompt({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    final promptProviderNotifier = ref.read(promptManagerProvider.notifier);
+
     return Expanded(
       child: Column(
         children: [
@@ -27,13 +26,11 @@ class Prompt extends StatelessWidget {
                       size: 16,
                     ),
                     label: const Text('New'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(80, 40),
-                      backgroundColor: const Color(0xFF5E47D2),
-                      foregroundColor: Colors.white,
-                    ),
+                    style: primaryButtonStyle(),
                     onPressed: () {
-                      onClickPromptNew();
+                      promptProviderNotifier.resetEditPrompt();
+                      mainProviderNotifier.changePage(
+                          pageIndex: 1, pageDetailIndex: 2);
                     },
                   ))),
           Expanded(
@@ -41,11 +38,7 @@ class Prompt extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: [
-                          PromptList(
-                              onCallback: (prompt) =>
-                                  onClickPromptList(prompt)),
-                        ],
+                        children: const [PromptList()],
                       )))),
         ],
       ),

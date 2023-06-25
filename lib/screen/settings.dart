@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import '../utils/const.dart';
-import '../db/database_helper.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prompt_manager/main.dart';
+import 'package:prompt_manager/utils/const.dart';
 
 const promptModelList = ['text-davinci-003'];
 
-class Settings extends StatefulWidget {
+class Settings extends ConsumerStatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
   @override
   SettingsState createState() => SettingsState();
 }
 
-class SettingsState extends State<Settings> {
-  final dbHelper = DatabaseHelper.instance;
+class SettingsState extends ConsumerState<Settings> {
   var selectedValue = promptModelList.first;
-  late var configTableRow;
-
   final _apiEditController = TextEditingController();
   bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
-    _dbinit();
+    final mainProviderNotifier = ref.read(appProvider.notifier);
+    final openAPIKey = ref.watch(appProvider).openAPIKey;
+    _apiEditController.text = openAPIKey;
 
     return Expanded(
       child: Padding(
@@ -96,35 +96,14 @@ class SettingsState extends State<Settings> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(80, 40),
-                        backgroundColor: const Color(0xFF5E47D2),
-                        foregroundColor: Colors.white,
-                      ),
+                      style: primaryButtonStyle(),
                       onPressed: () async {
-                        if (configTableRow.length == 0) {
-                          Map<String, dynamic> row = {
-                            'apikey': _apiEditController.text
-                          };
-                          await dbHelper.insert(userTableName, row);
-                        } else {
-                          Map<String, dynamic> row = {
-                            DatabaseHelper.columnId: 1,
-                            'apikey': _apiEditController.text
-                          };
-                          await dbHelper.update(userTableName, row);
-                        }
+                        mainProviderNotifier
+                            .registrationOpenApiKey(_apiEditController.text);
                       },
                       child: const Text('Save'),
                     ))),
           ])),
     );
-  }
-
-  void _dbinit() async {
-    configTableRow = await dbHelper.queryAllRows(userTableName);
-    if (configTableRow.length > 0) {
-      _apiEditController.text = configTableRow.first['apikey'];
-    }
   }
 }

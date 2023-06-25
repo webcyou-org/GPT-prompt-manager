@@ -1,13 +1,30 @@
 import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import '../utils/const.dart';
+
+import 'package:prompt_manager/utils/const.dart';
+import 'package:prompt_manager/state/prompt_manager_state.dart';
+
+final mainDbProvider =
+    Provider<DatabaseHelper>((ref) => DatabaseHelper.instance);
+
+final promptList = FutureProvider<List<PromptState>>((ref) async {
+  return ref.watch(mainDbProvider).promptList;
+});
+
+// final mainDbApikey = FutureProvider<String>((ref) async {
+//   return ref.watch(mainDbProvider).apikey;
+// });
+// final notesInsertion = FutureProvider.family<Todo, dynamic>((ref, todo) {
+//   return ref.watch(mainDbProvider).insert(todo);
+// });
 
 class DatabaseHelper {
-  static final _databaseName = "prompt_manager.db";
-  static final _databaseVersion = 1;
-  static final columnId = '_id';
+  static const _databaseName = "prompt_manager.db";
+  static const _databaseVersion = 1;
+  static const columnId = '_id';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -40,6 +57,23 @@ class DatabaseHelper {
             apikey TEXT NOT NULL
           )
           ''');
+  }
+
+  Future<String> get apikey async {
+    Database? db = await instance.database;
+
+    List<Map<String, dynamic>> configTableRow =
+        await db!.query(userTableName, limit: 1);
+    if (configTableRow.isNotEmpty) return configTableRow.first['apikey'];
+    return '';
+  }
+
+  Future<List<PromptState>> get promptList async {
+    Database? db = await instance.database;
+
+    final List<Map<String, Object?>> queryResult =
+        await db!.query(promptsTableName);
+    return queryResult.map((e) => PromptState.fromJson(e)).toList();
   }
 
   Future<int> insert(String tableName, Map<String, dynamic> row) async {
