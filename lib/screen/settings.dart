@@ -96,11 +96,7 @@ class SettingsState extends ConsumerState<Settings> {
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(80, 40),
-                        backgroundColor: const Color(0xFF5E47D2),
-                        foregroundColor: Colors.white,
-                      ),
+                      style: primaryButtonStyle(),
                       onPressed: () async {
                         mainProviderNotifier
                             .registrationOpenApiKey(_apiEditController.text);
