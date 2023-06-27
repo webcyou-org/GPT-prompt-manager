@@ -58,12 +58,10 @@ class PromptManagerViewState extends ConsumerState<PromptManager> {
             ],
             backgroundColor: const Color(0xff202123),
             selectedIndex: mainProvider.pageIndex,
-            onDestinationSelected: (index) {
-              mainProviderNotifier.changePage(
-                  pageIndex: index, pageDetailIndex: 0);
-            },
+            onDestinationSelected: (index) =>
+                mainProviderNotifier.changePageIndex(index),
           ),
-          mainProvider.selectedContent
+          mainProvider.currentContent
         ]));
   }
 }
