@@ -32,12 +32,12 @@ class Prompt extends ConsumerWidget {
                       mainProviderNotifier.changePage('/prompt/new');
                     },
                   ))),
-          const Expanded(
+          Expanded(
               child: SingleChildScrollView(
                   child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: [PromptList()],
+                        children: const [PromptList()],
                       )))),
         ],
       ),
