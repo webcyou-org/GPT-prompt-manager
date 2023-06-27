@@ -68,7 +68,7 @@ class PromptEditState extends ConsumerState<PromptEdit> {
                             value: _valueController.text);
                         await promptProviderNotifier.registrationPrompt();
                         promptProviderNotifier.resetEditPrompt();
-                        mainProviderNotifier.changePage(pageIndex: 1);
+                        mainProviderNotifier.changePage('/prompt');
                       },
                       child: const Text('Save'),
                     ))),

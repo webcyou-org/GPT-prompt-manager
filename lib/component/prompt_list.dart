@@ -41,7 +41,7 @@ class PromptList extends ConsumerWidget {
           )),
       onTap: () {
         promptProviderNotifier.setEditPrompt(prompt);
-        mainProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 2);
+        mainProviderNotifier.changePage('/prompt/edit');
         // _onClickPrompt(prompt);
       },
     );

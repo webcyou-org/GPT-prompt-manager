@@ -2,6 +2,7 @@ import 'package:prompt_manager/state/app_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prompt_manager/utils/const.dart';
 import 'package:prompt_manager/db/database_helper.dart';
+import 'package:prompt_manager/utils/routes.dart';
 
 class AppStateNotifier extends StateNotifier<AppState> {
   AppStateNotifier() : super(const AppState());
@@ -12,9 +13,15 @@ class AppStateNotifier extends StateNotifier<AppState> {
     state = const AppState();
   }
 
-  void changePage({pageIndex = 0, pageDetailIndex = 0}) {
-    state =
-        state.copyWith(pageIndex: pageIndex, pageDetailIndex: pageDetailIndex);
+  void changePageIndex(int pageIndex) {
+    final route = getRouteByPageIndex(pageIndex);
+    state = state.copyWith(pageIndex: pageIndex, currentContent: route.widget);
+  }
+
+  void changePage(String path) {
+    final route = getRouteByPath(path);
+    state = state.copyWith(
+        pageIndex: route.pageIndex, currentContent: route.widget);
   }
 
   void setApikey(String apikey) {

@@ -29,16 +29,15 @@ class Prompt extends ConsumerWidget {
                     style: primaryButtonStyle(),
                     onPressed: () {
                       promptProviderNotifier.resetEditPrompt();
-                      mainProviderNotifier.changePage(
-                          pageIndex: 1, pageDetailIndex: 2);
+                      mainProviderNotifier.changePage('/prompt/new');
                     },
                   ))),
-          Expanded(
+          const Expanded(
               child: SingleChildScrollView(
                   child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 20),
                       child: Column(
-                        children: const [PromptList()],
+                        children: [PromptList()],
                       )))),
         ],
       ),

@@ -17,7 +17,7 @@ class PromptSelectBox extends ConsumerWidget {
           icon: const Icon(Icons.add_circle_outline),
           onPressed: () {
             promptProviderNotifier.resetEditPrompt();
-            appProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 1);
+            appProviderNotifier.changePage('/prompt/new');
           },
         ),
         const Select(),
@@ -27,7 +27,7 @@ class PromptSelectBox extends ConsumerWidget {
             final selectedPrompt =
                 ref.read(promptManagerProvider).selectedPrompt;
             promptProviderNotifier.setEditPrompt(selectedPrompt);
-            appProviderNotifier.changePage(pageIndex: 1, pageDetailIndex: 1);
+            appProviderNotifier.changePage('/prompt/edit');
           },
         ),
       ],
