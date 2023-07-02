@@ -14,6 +14,11 @@ dependencies:
   flutter_riverpod: ^2.3.6
   sqflite: ^2.2.8+4
   path_provider: ^2.0.15
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: e48abe7
 
 dev_dependencies:
   flutter_test:

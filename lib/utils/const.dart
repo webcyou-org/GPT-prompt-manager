@@ -6,6 +6,9 @@ const chatGPTModel = "text-davinci-003";
 const promptsTableName = 'prompts';
 const userTableName = 'user_config';
 
+const double windowWidth = 700;
+const double windowHeight = 800;
+
 OutlineInputBorder inputBorder() {
   return const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
