@@ -37,7 +37,7 @@ class MessageList extends ConsumerWidget {
                         : Image.asset('assets/images/icon_user.png'),
                   ),
                   Flexible(
-                      child: Text(
+                      child: SelectableText(
                     message,
                     style: const TextStyle(
                         color: Color(0xff374151), fontSize: 14.0),
